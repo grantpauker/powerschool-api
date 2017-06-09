@@ -34,11 +34,17 @@ def gradeextract(html):
     while(i<len(grades)):
         classname=grades[i].parent.parent.find("span",{ "class" : "screen_readers_only" }).parent["title"].replace("Details about ","").split(", ")
         classname.reverse()
+        
+        classname=" ".join(classname).split(" ")
+        del classname[1]
         classname=" ".join(classname)
-        current_grade=grades[i].getText()
+        current_grade=list(grades[i].getText())
+        letter_grade=current_grade[0]
+        del current_grade[0]
+        percent_grade="".join(current_grade)
         if(len(current_grade)>1):
-            print(current_grade, ": ",classname)
+            print(letter_grade, ": ",percent_grade, ": ",classname)
+        
         i+=1
-
 
         
