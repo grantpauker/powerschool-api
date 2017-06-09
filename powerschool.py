@@ -34,7 +34,9 @@ def login(user,pw):
     'translatorpw':''
     }
     p = s.post(url, data=payload)
-    return toparagraph(str(p.content), ' ')
+    data=BeautifulSoup(p.content, "lxml")
+    table = data.find('table',attrs={'class':'linkDescList'})
+    return toparagraph(str(table), ' ')
 
 def toparagraph(txt, method):
     rawarr = txt.split(method)
