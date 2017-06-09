@@ -44,5 +44,3 @@ def toparagraph(txt, method):
         outstr += rawarr[newvar] + "\n"
         newvar += 1
     return outstr
-
-print(login('316933', 'biF224but'))
