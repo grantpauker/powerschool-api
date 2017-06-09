@@ -25,18 +25,20 @@ def login(user,pw):
     'pw':pw
     }
     p = s.post(url, data=payload)
-    data=BeautifulSoup(p.content, "lxml")
+    return p.content
+def gradeextract(html):
+    data=BeautifulSoup(html, "lxml")
     table = data.find('table',attrs={'class':'linkDescList'})
-    return toparagraph(str(table), ' ')
+    grades=table.findAll("a", { "class" : "bold" })
+    i=0
+    while(i<len(grades)):
+        classname=grades[i].parent.parent.find("span",{ "class" : "screen_readers_only" }).parent["title"].replace("Details about ","").split(", ")
+        classname.reverse()
+        classname=" ".join(classname)
+        current_grade=grades[i].getText()
+        if(len(current_grade)>1):
+            print(current_grade, ": ",classname)
+        i+=1
+gradeextract(login(<"username">,<"password">))
 
-def toparagraph(txt, method):
-    rawarr = txt.split(method)
-    outstr = ""
-    newvar = 0
-    while(newvar < len(rawarr)):
-        outstr += rawarr[newvar] + "\n"
-        newvar += 1
-    return outstr
-target = io.open("website.txt", 'w' , encoding='utf8')
-target.write(login("307266","tIq786nug"))
-target.close()
+        
