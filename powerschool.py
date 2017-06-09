@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
 import requests, re,io,json
 from lxml import html
 import hmac, hashlib, base64
 from bs4 import BeautifulSoup
+
 def hash(password,contextdata):
     return hmac.new(contextdata.encode('ascii'), base64.b64encode(hashlib.md5(password.encode('ascii')).digest()).replace(b"=", b""), hashlib.md5).hexdigest()
 
@@ -32,4 +34,15 @@ def login(user,pw):
     'translatorpw':''
     }
     p = s.post(url, data=payload)
-    return p.content
+    return toparagraph(str(p.content), ' ')
+
+def toparagraph(txt, method):
+    rawarr = txt.split(method)
+    outstr = ""
+    newvar = 0
+    while(newvar < len(rawarr)):
+        outstr += rawarr[newvar] + "\n"
+        newvar += 1
+    return outstr
+
+print(login('316933', 'biF224but'))
