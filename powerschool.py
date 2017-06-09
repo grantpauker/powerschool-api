@@ -2,6 +2,8 @@ import requests, re,io,json
 from lxml import html
 import hmac, hashlib, base64
 from bs4 import BeautifulSoup
+def hash(password,contextdata):
+    return hmac.new(contextdata.encode('ascii'), base64.b64encode(hashlib.md5(password.encode('ascii')).digest()).replace(b"=", b""), hashlib.md5).hexdigest()
 
 def login(user,pw):
     url="https://powerschool.sandi.net/guardian/home.html"
@@ -10,7 +12,7 @@ def login(user,pw):
     tree = html.fromstring(result.text)
     pstoken = list(set(tree.xpath("//*[@id=\"LoginForm\"]/input[1]/@value")))[0]
     contextdata = list(set(tree.xpath("//input[@id=\"contextData\"]/@value")))[0]
-    new_pw=hmac.new(contextdata.encode('ascii'), base64.b64encode(hashlib.md5(pw.encode('ascii')).digest()).replace(b"=", b""), hashlib.md5).hexdigest()
+    new_pw=hash(pw,contextdata)
 
     payload={
     'pstoken':pstoken,
