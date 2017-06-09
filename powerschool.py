@@ -39,6 +39,6 @@ def gradeextract(html):
         if(len(current_grade)>1):
             print(current_grade, ": ",classname)
         i+=1
-gradeextract(login(<"username">,<"password">))
+
 
         
