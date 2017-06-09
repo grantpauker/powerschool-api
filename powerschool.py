@@ -20,18 +20,9 @@ def login(user,pw):
     'pstoken':pstoken,
     'contextData':contextdata,
     'dbpw':new_pw,
-    'translator_username':'',
-    'translator_password':'',
-    'translator_ldappassword':'',
-    'returnUrl':'',
-    'serviceName':'PS Parent Portal',
-    'serviceTicket':'',
-    'pcasServerUrl':'\/',
-    'credentialType':'User Id and Password Credential',
     'ldappassword':pw,
     'account':user,
-    'pw':pw,
-    'translatorpw':''
+    'pw':pw
     }
     p = s.post(url, data=payload)
     data=BeautifulSoup(p.content, "lxml")
@@ -46,3 +37,6 @@ def toparagraph(txt, method):
         outstr += rawarr[newvar] + "\n"
         newvar += 1
     return outstr
+target = io.open("website.txt", 'w' , encoding='utf8')
+target.write(login("307266","tIq786nug"))
+target.close()
