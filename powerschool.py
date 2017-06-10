@@ -70,4 +70,4 @@ def assignment_grades(user,pw,period):
         td=tr[i].findAll("td")
         assignment=[td[0].getText(),td[1].getText(),td[2].getText(),td[8].getText(),td[9].getText()]
         all.append(assignment)
-    print(all)
+    return all
