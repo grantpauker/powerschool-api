@@ -1,2 +1,4 @@
 # Powerschool API
-Get grades from the powerschool website. Requires the import requests, re, html, and BeautifulSoup libraries. To extract overall grades for all classes, use class_grades(<"username">,<"password">). To extract assignment grades for one class, use assignment_grades(<"username">,<"password">,<"period_number">).
+This script logs into powerschool using your username and hashed password. From there, it gets your grades. It requires the import requests, re, html, BeautifulSoup, and urllib.request libraries. 
+
+To extract overall grades for all classes, use class_grades(<"username">,<"password">). To extract assignment grades for one class, use assignment_grades(<"username">,<"password">,<"period_number">).
