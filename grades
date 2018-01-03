@@ -1,0 +1,40 @@
+#!/bin/bash
+between(){
+  [ "$1" -gt "$2" ] && [ "$1" -lt "$3" ]
+}
+help(){
+  echo -e "$(rgb 255 255 0)TODO: $(rgb 255 0 0)MAKE $(rgb 0 255 0)THIS $(rgb 0 0 220)LOOK $(rgb 255 0 255)NICE$(rgb 255 255 255)"
+  echo "grades gets grades: c=classes, a=assignments"
+  echo "  grades [-c|-a] <period> -- gets class or assignment data by period"
+  echo "  grades [-C|-A] -- gets all class or assignment data"
+}
+rgb(){
+    printf "\x1b[38;2;$1;$2;$3m"
+}
+
+if [ "$1" == "-c" ]; then
+  if ! between $2 0 7; then
+    echo "Error: period not in range (1-6)"
+    exit
+  fi
+  param=".[\"$2\"]|.info"
+elif [ "$1" == "-C" ]; then
+  param='.[]|.info'
+elif [ "$1" == "-a" ]; then
+  if ! between $2 0 7; then
+    echo "Error: period not in range (1-6)"
+    exit
+  fi
+  param=".[\"$2\"]"
+elif [ "$1" == "-A" ]; then
+  param='.[]'
+else
+  help
+  exit
+fi
+raw=$(python3 <<< "
+from powerschool import *
+p=login('307266','tIq786nug')
+printJSON(getAllGrades(p))")
+
+echo $raw | jq "$param"
